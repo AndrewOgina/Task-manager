@@ -21,5 +21,5 @@ A simple, efficient, and user-friendly task manager app built with Django. This 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AndrewOgina/Task-manager.git
-   cd Task-manager
+   git clone https://github.com/AndrewOgina/task_manager.git
+   cd task_manager
