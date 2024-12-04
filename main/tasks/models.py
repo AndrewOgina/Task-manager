@@ -4,10 +4,21 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class TimeBlock(models.Model):
+    RECURSION_CHOICES = [
+        (1, "Daily"),
+        (2, "Weekly"),
+        (3, "Monthly"),
+        (4, "Yearly"),
+        (5, "Once"),
+    ]
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="time_blocks")
     name = models.CharField(max_length=50, help_text="A short name for the time block.")
     start_time = models.DateTimeField(help_text="When this time block starts.")
     end_time = models.DateTimeField(help_text="When this time block ends.")
+    recursion = models.PositiveSmallIntegerField(
+        choices=RECURSION_CHOICES, default=1, help_text="Type of task."
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
