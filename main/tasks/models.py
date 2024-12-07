@@ -51,7 +51,7 @@ class Task(models.Model):
     )
 
     # Task Details
-    name = models.CharField(max_length=255, help_text="The name of the task.")
+    title = models.CharField(max_length=100, help_text="Title of the task.")
     description = models.TextField(blank=True, help_text="Details about the task.")
     start_date = models.DateField(
         null=True, blank=True, help_text="The date when the task should start."
