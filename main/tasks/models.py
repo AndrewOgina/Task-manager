@@ -61,14 +61,24 @@ class Task(models.Model):
     )
 
     # Task Priority, Type, and Progress
-    priority = models.PositiveSmallIntegerField(
-        choices=PRIORITY_CHOICES, default=2, help_text="Priority of the task."
+    urgency = models.CharField(
+        max_length=10, 
+        choices=URGENCY_CHOICES, 
+        default="soon", 
+        help_text="Urgency of the task."
     )
-    task_type = models.PositiveSmallIntegerField(
-        choices=TASK_TYPES, default=1, help_text="Type of task."
+    priority = models.CharField(
+        max_length=10,
+        choices=PRIORITY_CHOICES,
+        default="important",
+        help_text="Importance of the task.",
     )
-    progress = models.PositiveSmallIntegerField(
-        choices=PROGRESS_CHOICES, default=1, help_text="Progress of the task."
+    
+    progress = models.CharField(
+        max_length=12,
+        choices=PROGRESS_CHOICES, 
+        default='not_started', 
+        help_text="Progress of the task."
     )
 
     # Task Nesting
