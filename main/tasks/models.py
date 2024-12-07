@@ -25,28 +25,23 @@ class TimeBlock(models.Model):
 
 
 class Task(models.Model):
-    PRIORITY_CHOICES = [
-        (1, "Important and Urgent"),
-        (2, "Important but Not Urgent (Schedule)"),
-        (3, "Urgent but Not Important (Delegate)"),
-        (4, "Neither Important Nor Urgent (Eliminate)"),
+    URGENCY_CHOICES = [
+        ('urgent', "Urgent"),
+        ('soon', "Soon"),
+        ('later', "Later"),
     ]
-
-    TASK_TYPES = [
-        (1, "Work"),
-        (2, "School"),
-        (3, "Personal"),
-        (4, "Routine"),
-        (5, "Chores"),
-        (6, "Hobby"),
-        (7, "Other"),
+    
+    PRIORITY_CHOICES = [
+        ('high', "High Priority"),
+        ('medium', "Medium Priority"),
+        ('low', "Low Priority"),
     ]
 
     PROGRESS_CHOICES = [
-        (1, "Not Started"),
-        (2, "In Progress"),
-        (3, "On Hold"),
-        (4, "Completed"),
+        ('not_started', "Not Started"),
+        ('in_progress', "In Progress"),
+        ('paused', "Paused"),
+        ('completed', "Completed"),
     ]
 
     # Task Owner and Time Block
