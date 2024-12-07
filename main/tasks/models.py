@@ -85,7 +85,7 @@ class TimeBlock(models.Model):
         (4, "Yearly"),
         (5, "Once"),
     ]
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="tasks")
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="time_block")
     start_time = models.DateTimeField(help_text="When this time block starts.")
     end_time = models.DateTimeField(help_text="When this time block ends.")
     recursion = models.PositiveSmallIntegerField(
