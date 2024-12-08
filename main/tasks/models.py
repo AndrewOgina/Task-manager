@@ -25,9 +25,6 @@ class Task(models.Model):
 
     # Task Owner and Time Block
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tasks")
-    time_block = models.ForeignKey(
-        TimeBlock, on_delete=models.CASCADE, related_name="tasks", null=True, blank=True
-    )
 
     # Task Details
     title = models.CharField(max_length=100, help_text="Title of the task.")
