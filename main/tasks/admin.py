@@ -5,4 +5,5 @@ from .models import TimeBlock
 
 # Register your models here.
 
-admin.site.register(Task,TimeBlock)
+admin.site.register(Task)
+admin.site.register(TimeBlock)
