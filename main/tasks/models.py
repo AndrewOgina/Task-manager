@@ -100,13 +100,31 @@ class TimeBlock(models.Model):
         (5, "Once"),
     ]
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="time_block")
-    start_time = models.DateTimeField(help_text="When this time block starts.")
-    end_time = models.DateTimeField(help_text="When this time block ends.")
+    start_time = models.TimeField(help_text="When this time block starts.")
+    end_time = models.TimeField(help_text="When this time block ends.")
     recursion = models.PositiveSmallIntegerField(
         choices=RECURSION_CHOICES, default=1, help_text="Type of task."
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def total_time(self):
+        start = self.start_time.hour * 60 + self.start_time.minute
+        end = self.end_time.hour * 60 + self.end_time.minute
+        
+        total = end - start
+        hours = total // 60
+        minutes = total % 60
+        
+        return f"{hours} hours {minutes} minutes"
 
     def __str__(self):
-        return f"{self.name} ({self.start_time} - {self.end_time})"
+        start_time = self.start_time.strftime("%H:%M")
+        end_time = self.end_time.strftime("%H:%M")
+
+        return f"{self.task.title} ({self.total_time()})."
+
+    def save(self, *args, **kwargs):
+        if self.start_time >= self.end_time:
+            raise ValueError("Start time must be before end time.")
+        super().save(*args, **kwargs)
