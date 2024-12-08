@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from datetime import date
+
 
 User = get_user_model()
 
@@ -71,9 +73,24 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    def __str__(self):
-        return self.title
+    def days_until_due(self):
+        today = date.today()
+        due_date = self.due_date
+        
+        if due_date:
+            time_until_due = due_date - today
+            return time_until_due.days
+        return None
     
+    def __str__(self):
+        return f"{self.title} (Due in {self.days_until_due()} days)."
+    
+    def save(self, *args, **kwargs):
+        if self.start_date and self.due_date:
+            if self.start_date > self.due_date:
+                raise ValueError("Start date must be before due date.")
+        super().save(*args, **kwargs)
+
 class TimeBlock(models.Model):
     RECURSION_CHOICES = [
         (1, "Daily"),
