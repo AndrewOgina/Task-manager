@@ -34,6 +34,9 @@ PROJECT_APPS = [
     'tasks',
 ]
 
+THIRD_PARTY_APPS = [
+    "debug_toolbar",
+]
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -44,13 +47,14 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-INSTALLED_APPS = PROJECT_APPS + DJANGO_APPS
+INSTALLED_APPS = PROJECT_APPS + DJANGO_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
