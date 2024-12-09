@@ -74,6 +74,43 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    def get_all_descendants(self):
+        descendants = Task.objects.filter(
+            Q(parent_task=self) | Q(parent_task__in=self.subtasks.all())
+        )
+        return descendants.distinct()
+
+    def get_all_ancestors(self):
+        """
+        Recursively fetch all parent tasks (ancestors) of the current task.
+        """
+        ancestors = []
+        current_task = self.parent_task
+        while current_task is not None:
+            ancestors.append(current_task)
+            current_task = current_task.parent_task
+        return ancestors
+    
+    @property
+    def all_subtasks_count(self):
+        return self.get_all_descendants().count()
+    
+    def all_finished_subtasks_count(self):
+        return self.get_all_descendants().filter(is_finished = True ).count()
+    
+    def percentage_of_completion(self):
+        total = self.all_subtasks_count
+        
+        if total == 0:
+            return 0
+        finished = self.all_finished_subtasks_count()
+        percentage = (finished / total) * 100 if total > 0 else 0
+        return round(percentage, 0)
+    
+    @property
+    def progress(self):
+        return f"{self.all_finished_subtasks_count()} / {self.all_subtasks_count}"
+    
     def days_until_due(self):
         today = date.today()
         due_date = self.due_date
