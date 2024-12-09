@@ -49,15 +49,19 @@ class Task(models.Model):
     priority = models.CharField(
         max_length=10,
         choices=PRIORITY_CHOICES,
-        default="important",
+        default="medium",
         help_text="Importance of the task.",
     )
     
-    progress = models.CharField(
-        max_length=12,
-        choices=PROGRESS_CHOICES, 
-        default='not_started', 
-        help_text="Progress of the task."
+    is_finished = models.BooleanField(
+        default=False, 
+        help_text="Check if the task is finished."
+    )
+    
+    finished_at = models.DateTimeField(
+        null=True, 
+        blank=True, 
+        help_text="When the task was completed."
     )
 
     # Task Nesting
