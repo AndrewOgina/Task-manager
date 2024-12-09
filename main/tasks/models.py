@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from datetime import date
-
+from django.db.models import Q
+from django.utils.timezone import now
 
 User = get_user_model()
 
@@ -89,6 +90,13 @@ class Task(models.Model):
         if self.start_date and self.due_date:
             if self.start_date > self.due_date:
                 raise ValueError("Start date must be before due date.")
+        
+        if self.is_finished and self.finished_at is None:
+            # Set `finished_at` to current time if marked as finished
+            self.finished_at = now()
+        elif not self.is_finished:
+            # Clear `finished_at` if marked as unfinished
+            self.finished_at = None
         super().save(*args, **kwargs)
 
 class TimeBlock(models.Model):
