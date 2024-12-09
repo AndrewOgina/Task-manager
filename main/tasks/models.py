@@ -19,13 +19,6 @@ class Task(models.Model):
         ('low', "Low Priority"),
     ]
 
-    PROGRESS_CHOICES = [
-        ('not_started', "Not Started"),
-        ('in_progress', "In Progress"),
-        ('paused', "Paused"),
-        ('completed', "Completed"),
-    ]
-
     # Task Owner and Time Block
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tasks")
 
